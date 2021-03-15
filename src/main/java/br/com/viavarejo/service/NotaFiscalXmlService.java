@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import br.com.viavarejo.model.xml.Det;
+import br.com.viavarejo.model.xml.InfNfe;
 import br.com.viavarejo.model.xml.NfeProc;
 import br.com.viavarejo.repository.NfeProcRepository;
 
@@ -27,10 +29,10 @@ public class NotaFiscalXmlService {
 		File arquivoNotaLocal = new File(fileName); 
 		XStream xStream = new XStream(new DomDriver());
 		xStream.processAnnotations(NfeProc.class);
-
+		xStream.addImplicitCollection(InfNfe.class,"det" ,Det.class);
 		NfeProc nfeProc = (NfeProc) xStream.fromXML(reader);
 		rep.save(nfeProc);
-		System.out.println("NOTA SALVA NO MONGO: " + nfeProc.getNfe().getInfNfe().getIde().getcNF());
+		System.out.println("CHAVE DA NOTA SALVA NO MONGO: " + nfeProc.getProtNFe().getInfProt().getChNFe());
 		arquivoNotaLocal.delete();
 	}
 }

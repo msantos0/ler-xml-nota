@@ -1,5 +1,7 @@
 package br.com.viavarejo.model.xml;
 
+import java.util.List;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("infNFe")
@@ -15,7 +17,7 @@ public class InfNfe {
 	private Dest dest;
 
 	@XStreamAlias("det")
-	private Det det;
+	private List<Det> det;
 
 	@XStreamAlias("total")
 	private Total total;
@@ -62,11 +64,11 @@ public class InfNfe {
 		this.dest = dest;
 	}
 
-	public Det getDet() {
+	public List<Det> getDet() {
 		return det;
 	}
 
-	public void setDet(Det det) {
+	public void setDet(List<Det> det) {
 		this.det = det;
 	}
 
