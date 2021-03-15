@@ -27,12 +27,23 @@ public class NotaFiscalXmlService {
 	 * */
 	public void lerXml(FileReader reader, String fileName) throws FileNotFoundException {
 		File arquivoNotaLocal = new File(fileName);  // objeto criado para poder excluir o arquivo da nota local
+		String chaveNota = "";
 		XStream xStream = new XStream(new DomDriver());
 		xStream.processAnnotations(NfeProc.class); // configurção para que seja identificada as anotações de todas as classes detnro do pacote model
 		xStream.addImplicitCollection(InfNfe.class,"det" ,Det.class); // configuração para indicar que o objeto "DET" no xml é uma lista
 		NfeProc nfeProc = (NfeProc) xStream.fromXML(reader); // conversão do xml em objeto "NfeProc"
-		rep.save(nfeProc); // Gravando objeto convertido no mongo
-		System.out.println("CHAVE DA NOTA SALVA NO MONGO: " + nfeProc.getProtNFe().getInfProt().getChNFe());
+		chaveNota = nfeProc.getProtNFe().getInfProt().getChNFe(); // guarda valor da chave da nota em uma variavel String
+		NfeProc nfeMongo = rep.findByProtNFeInfProtChNFe(chaveNota); // faz query no mongoDB para verificar se aquela nota ja foi gravada
+		
+		if(nfeMongo == null) {
+			// Se a nfeMongo for igual a null ou seja, se a nota ainda não foi gravada no mongo 
+			rep.save(nfeProc); // Gravando objeto convertido no mongo
+			System.out.println("CHAVE DA NOTA SALVA NO MONGO: " + chaveNota);
+		}else {
+			// Se a nfeMongo for diferente de null, a nota já existe no mongo, portanto é desprezada
+			System.out.println("NOTA DESPREZADA POIS JÁ EXISTE NO MONGO: " + chaveNota);
+		}
+		
 		arquivoNotaLocal.delete(); //Excluindo arquivo da nota local
 	}
 }

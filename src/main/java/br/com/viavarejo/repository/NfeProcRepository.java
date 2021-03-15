@@ -6,6 +6,6 @@ import br.com.viavarejo.model.xml.NfeProc;
 
 public interface NfeProcRepository extends MongoRepository<NfeProc, String>{
 
-	//NfeProc findByNfeInfNfeIdecNF(String chaveNota);
+	NfeProc findByProtNFeInfProtChNFe(String chaveNota);
 
 }
