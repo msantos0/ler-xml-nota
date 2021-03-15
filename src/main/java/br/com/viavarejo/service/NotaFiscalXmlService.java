@@ -26,13 +26,13 @@ public class NotaFiscalXmlService {
 	 * da maquina local
 	 * */
 	public void lerXml(FileReader reader, String fileName) throws FileNotFoundException {
-		File arquivoNotaLocal = new File(fileName); 
+		File arquivoNotaLocal = new File(fileName);  // objeto criado para poder excluir o arquivo da nota local
 		XStream xStream = new XStream(new DomDriver());
-		xStream.processAnnotations(NfeProc.class);
-		xStream.addImplicitCollection(InfNfe.class,"det" ,Det.class);
-		NfeProc nfeProc = (NfeProc) xStream.fromXML(reader);
-		rep.save(nfeProc);
+		xStream.processAnnotations(NfeProc.class); // configurção para que seja identificada as anotações de todas as classes detnro do pacote model
+		xStream.addImplicitCollection(InfNfe.class,"det" ,Det.class); // configuração para indicar que o objeto "DET" no xml é uma lista
+		NfeProc nfeProc = (NfeProc) xStream.fromXML(reader); // conversão do xml em objeto "NfeProc"
+		rep.save(nfeProc); // Gravando objeto convertido no mongo
 		System.out.println("CHAVE DA NOTA SALVA NO MONGO: " + nfeProc.getProtNFe().getInfProt().getChNFe());
-		arquivoNotaLocal.delete();
+		arquivoNotaLocal.delete(); //Excluindo arquivo da nota local
 	}
 }
