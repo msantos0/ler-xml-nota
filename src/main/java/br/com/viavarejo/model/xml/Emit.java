@@ -11,6 +11,16 @@ public class Emit {
 	public EnderEmit enderEmit;
 	public String IE;
 	public String CRT;
+	public String Cep;
+
+
+	public String getCep() {
+		return Cep;
+	}
+
+	public void setCep(String cep) {
+		Cep = cep;
+	}
 
 	public String getCNPJ() {
 		return CNPJ;
