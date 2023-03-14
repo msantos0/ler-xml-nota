@@ -9,6 +9,15 @@ public class Dest {
 	public String xNome;
 	public EnderDest enderDest;
 	public String indIEDest;
+	public String inscrEstadual;
+
+	public String getInscrEstadual() {
+		return inscrEstadual;
+	}
+
+	public void setInscrEstadual(String inscrEstadual) {
+		this.inscrEstadual = inscrEstadual;
+	}
 
 	public String getCPF() {
 		return CPF;
